@@ -33,32 +33,7 @@
 #ifndef __glues_h__
 #define __glues_h__
 
-#if defined(__USE_SDL_GLES__)
-   #include <SDL/SDL_opengles.h>
-   #ifndef GLAPI
-      #define GLAPI GL_API
-   #endif
-#elif defined (__QNXNTO__)
-   #include <GL/gl.h>
-   #include <GL/glext.h>
-#elif defined(_WIN32) && (defined(_M_IX86) || defined(_M_X64))
-   /* mainly for PowerVR OpenGL ES 1.x win32 emulator */
-   #include <GL\gl.h>
-   #include <GL\glext.h>
-   #undef APIENTRY
-   #define APIENTRY
-   #if defined(GLUES_EXPORTS)
-      #define GLAPI __declspec(dllexport)
-   #else
-      #define GLAPI __declspec(dllimport)
-   #endif
-#else
-   #error "Platform is unsupported"
-#endif
-
-#ifndef APIENTRYP
-   #define APIENTRYP APIENTRY *
-#endif /* APIENTRYP */
+#include "glues_egl_guard.h"
 
 #ifdef __cplusplus
    extern "C" {
