@@ -40,13 +40,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <math.h>
-
-#ifndef max
-#define max(a,b) ((a>b)? a:b)
-#endif
-#ifndef min
-#define min(a,b) ((a>b)? b:a)
-#endif
+#include <algorithm>
 
 #include "glues.h"
 
@@ -764,7 +758,7 @@ Int findNeckF(vertexArray *leftChain, Int botLeftIndex,
      botRightIndex >= rightChain->getNumElements())
     return 0; //no neck exists
 
-  v=min(leftChain->getVertex(botLeftIndex)[1], rightChain->getVertex(botRightIndex)[1]);  
+  v=std::min(leftChain->getVertex(botLeftIndex)[1], rightChain->getVertex(botRightIndex)[1]);
 
   for(i=gridStartIndex; i<n_vlines; i++)
     if(leftGridChain->get_v_value(i) <= v && 
@@ -891,7 +885,7 @@ void findLeftGridIndices(directedLine* topEdge, Int firstGridIndex, Int lastGrid
 	   */
 	  while( (vtail=dLine->tail()[1]) > grid_v_value){
 
-	    tempMaxU = max(tempMaxU, dLine->tail()[0]);
+	    tempMaxU = std::max(tempMaxU, dLine->tail()[0]);
 	    dLine = dLine -> getNext();
 	  }
 
@@ -906,14 +900,14 @@ void findLeftGridIndices(directedLine* topEdge, Int firstGridIndex, Int lastGrid
 
       if(isHoriz)
 	{
-	  uinterc = max(dLine->head()[0], dLine->tail()[0]);
+	  uinterc = std::max(dLine->head()[0], dLine->tail()[0]);
 	}
       else
 	{
 	  uinterc = slop * (grid_v_value - vtail) + dLine->tail()[0];
 	}
       
-      tempMaxU = max(tempMaxU, uinterc);
+      tempMaxU = std::max(tempMaxU, uinterc);
 
       if(uinterc < uMin && uinterc >= uMin - ZERO)
 	uinterc = uMin;
@@ -1008,7 +1002,7 @@ void findRightGridIndices(directedLine* topEdge, Int firstGridIndex, Int lastGri
 	   *find the trim edge which will contain the trim line
 	   */
 	  while( (vhead=dLine->head()[1]) > grid_v_value){
-	    tempMinU = min(tempMinU, dLine->head()[0]);
+	    tempMinU = std::min(tempMinU, dLine->head()[0]);
 	    dLine = dLine -> getPrev();
 	  }
 
@@ -1040,7 +1034,7 @@ void findRightGridIndices(directedLine* topEdge, Int firstGridIndex, Int lastGri
       uintercBuf[k] = uinterc;
 #endif      
 
-      tempMinU = min(tempMinU, uinterc);
+      tempMinU = std::min(tempMinU, uinterc);
 
       assert(uinterc >= uMin && uinterc <= uMax);      
 
