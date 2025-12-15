@@ -48,7 +48,6 @@ set_target_properties(glues_obj PROPERTIES
   POSITION_INDEPENDENT_CODE ON
 )
 
-
 add_library(glues STATIC $<TARGET_OBJECTS:glues_obj>)
 add_library(glues::glues ALIAS glues)
 
@@ -57,15 +56,11 @@ add_library(glues::glues ALIAS glues)
 target_link_libraries(glues PUBLIC glues_obj)
 
 # ----------------------------
-# Install into glues/out/<Config>
+# Install into /out/glues/<Config>
 # ----------------------------
 include(GNUInstallDirs)
 
-# If the user didn't set an install prefix, default to <source>/out
-# and put outputs under out/lib/<Config>/...
-if(CMAKE_INSTALL_PREFIX_INITIALIZED_TO_DEFAULT)
-  set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/out" CACHE PATH "" FORCE)
-endif()
+set(CMAKE_INSTALL_PREFIX "${CMAKE_CURRENT_SOURCE_DIR}/out/glues" CACHE PATH "" FORCE)
 
 set(_GLUES_CFG "$<IF:$<BOOL:$<CONFIG>>,$<CONFIG>,${CMAKE_BUILD_TYPE}>")
 
@@ -77,7 +72,6 @@ install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/source/
   DESTINATION "include"
   FILES_MATCHING
     PATTERN "*.h"
-    PATTERN "../include/*.h"
     PATTERN "libnurbs" EXCLUDE
     PATTERN "libnurbs/*" EXCLUDE
     PATTERN "libtess" EXCLUDE
