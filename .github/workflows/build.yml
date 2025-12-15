@@ -43,8 +43,8 @@ jobs:
       - name: Zip
         run: |
           TAG=${{ github.ref_name }}
-          mv ./out/glues "glues_${TAG}.zip" 
-          zip -r "glues_${TAG}.zip" "glues_${TAG}.zip"
+          mv ./out/glues "glues_${TAG}" 
+          zip -r "glues_${TAG}.zip" "glues_${TAG}"
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/')
