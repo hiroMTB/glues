@@ -43,6 +43,7 @@ jobs:
       - name: Zip
         run: |
           TAG=${{ github.ref_name }}
+          mkdir "glues_${TAG}"
           mv ./out/glues "glues_${TAG}/glues" 
           zip -r "glues_${TAG}.zip" "glues_${TAG}"
 
