@@ -4,14 +4,11 @@
 
 #pragma once
 
-#ifndef TARGET_EGL
-#error "glues GLU headers are EGL-only. Use the system GLU headers for non-EGL builds."
-#endif
-
-#include "OpenGlMock.h"
+#include <OpenGL/gl.h>
+#include <OpenGL/glext.h>
 
 #ifndef GLAPI
-  #define GLAPI GL_API
+  #define GLAPI extern
 #endif
 
 #ifndef APIENTRY

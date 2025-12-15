@@ -11,8 +11,6 @@ add_compile_definitions(LIBRARYBUILD)
 # For our ANGLE/EGL build we do NOT want SDL's GL header path assumptions.
 add_compile_definitions(__USE_SDL_GLES__=1)
 
-add_compile_definitions(TARGET_EGL)
-
 # Includes
 add_library(glues_obj OBJECT)
 
@@ -25,9 +23,6 @@ target_include_directories(glues_obj
     ${CMAKE_CURRENT_SOURCE_DIR}/source/libnurbs/interface
     ${CMAKE_CURRENT_SOURCE_DIR}/source/libnurbs/nurbtess
 )
-
-target_include_directories(glues_obj PUBLIC ../angle/include)
-target_include_directories(glues_obj PUBLIC "../Isadora/Isadora SDK/Headers")
 
 #
 # Source files
@@ -78,17 +73,16 @@ install(TARGETS glues
   ARCHIVE DESTINATION "lib/${_GLUES_CFG}"
 )
 
-if(EXISTS "${CMAKE_CURRENT_SOURCE_DIR}/source")
-  install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/source/
-    DESTINATION "include"
-    FILES_MATCHING
-      PATTERN "*.h"
-      PATTERN "libnurbs" EXCLUDE
-      PATTERN "libnurbs/*" EXCLUDE
-      PATTERN "libtess" EXCLUDE
-      PATTERN "libtess/*" EXCLUDE
-  )
-endif()
+install(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR}/source/
+  DESTINATION "include"
+  FILES_MATCHING
+    PATTERN "*.h"
+    PATTERN "../include/*.h"
+    PATTERN "libnurbs" EXCLUDE
+    PATTERN "libnurbs/*" EXCLUDE
+    PATTERN "libtess" EXCLUDE
+    PATTERN "libtess/*" EXCLUDE
+)
 
 
 # ----------------------------

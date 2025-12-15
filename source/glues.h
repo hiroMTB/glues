@@ -33,7 +33,7 @@
 #ifndef __glues_h__
 #define __glues_h__
 
-#include "glues_egl_guard.h"
+#include "headerGL.h"
 
 #ifdef __cplusplus
    extern "C" {

@@ -33,7 +33,7 @@
 #ifndef __GLUES_MIPMAP_H__
 #define __GLUES_MIPMAP_H__
 
-#include "glues_egl_guard.h"
+#include "headerGL.h"
 
 #ifdef __cplusplus
    extern "C" {
