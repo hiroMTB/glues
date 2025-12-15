@@ -31,19 +31,16 @@ jobs:
 
       - name: Debug build
         run: |
-          cd glues
           cmake -S . -B build/Debug -DCMAKE_BUILD_TYPE=Debug
           cmake --build build/Debug
 
       - name: Release build
         run: |
-          cd glues
           cmake -S . -B build/Release -DCMAKE_BUILD_TYPE=Release
           cmake --build build/Release
 
       - name: Zip
         run: |
-          cd glues
           zip -r glues.zip out
 
       - name: Create Release
@@ -54,4 +51,4 @@ jobs:
           body: |
             🔨 Built from glues commit [`${{ github.sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
           artifacts: |
-            glues/glues.zip
+            glues.zip
