@@ -13,7 +13,7 @@ on:
       - main
       - develop
 jobs:
-  check:
+  check-environmet:
     name: Check environment
     runs-on: macos-14
     steps:
@@ -25,6 +25,7 @@ jobs:
   build:
     name: Build glues
     runs-on: macos-14
+    needs: check-environmet
     steps:
       - name: Checkout repository
         uses: actions/checkout@v6
