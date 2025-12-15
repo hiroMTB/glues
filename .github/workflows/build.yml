@@ -1,0 +1,57 @@
+name: Build glues macOS
+
+permissions:
+  contents: write
+
+on:
+  push:
+    tags:
+      - "v*.*.*"
+
+  pull_request:
+    branches:
+      - main
+      - develop
+jobs:
+  check:
+    name: Check environment
+    runs-on: macos-14
+    steps:
+      - name: Check MacOS XCode version
+        run: |
+          echo "macOS version:"
+          sw_vers
+
+  build:
+    name: Build glues
+    runs-on: macos-14
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v6
+
+      - name: Debug build
+        run: |
+          cd glues
+          cmake -S . -B build/Debug -DCMAKE_BUILD_TYPE=Debug
+          cmake --build build/Debug
+
+      - name: Release build
+        run: |
+          cd glues
+          cmake -S . -B build/Release -DCMAKE_BUILD_TYPE=Release
+          cmake --build build/Release
+
+      - name: Zip
+        run: |
+          cd glues
+          zip -r glues.zip out
+
+      - name: Create Release
+        if: startsWith(github.ref, 'refs/tags/')
+        uses: ncipollo/release-action@v1
+        with:
+          name: "glues library for macOS ${{ github.ref_name }}"
+          body: |
+            🔨 Built from glues commit [`${{ github.sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
+          artifacts: |
+            glues/glues.zip
