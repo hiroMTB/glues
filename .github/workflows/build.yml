@@ -41,7 +41,9 @@ jobs:
 
       - name: Zip
         run: |
-          zip -r glues.zip out
+          TAG=${{ github.ref_name }}
+          mv out glues
+          zip -r "glues_${TAG}.zip" glues
 
       - name: Create Release
         if: startsWith(github.ref, 'refs/tags/')
@@ -51,4 +53,4 @@ jobs:
           body: |
             🔨 Built from glues commit [`${{ github.sha }}`](${{ github.server_url }}/${{ github.repository }}/commit/${{ github.sha }})
           artifacts: |
-            glues.zip
+            glues_${{ github.ref_name }}.zip
