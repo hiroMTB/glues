@@ -4,8 +4,7 @@
 
 #pragma once
 
-#include <OpenGL/gl.h>
-#include <OpenGL/glext.h>
+#include <gldef.h>
 
 #ifndef GLAPI
   #define GLAPI extern
